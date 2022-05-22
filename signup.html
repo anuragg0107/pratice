@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <style>
+         #signup{
+             margin: auto;
+             text-align: center;
+             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+             width: 40%;
+             height: 400px;
+             padding: 20px;
+             background-color: #1c2939;
+             color: white;
+             border-radius: 20px;
+         }
+         h1{
+             text-align: center;
+         }
+         a{
+             color: rgb(194, 94, 94);
+             font-size: 18px;
+         }
+    </style>
+</head>
+<body>
+    <h1>Reebok</h1>
+       <form id="signup">
+            <h2>Sign Up</h2>
+             <p>Full Name</p>
+            <input type="text" placeholder="Enter your full name" id="name">
+             <p>Email</p> 
+            <input type="text" placeholder="Enter email" id="email">
+             <p>Password</p> 
+            <input type="password" placeholder="Enter password" id="password">
+            <p>Already Register <a href="login.html">LogIn</a></p>
+            <p>By sigining up I accept the Reebok Terms of Service and acknoledge the Privacy Policy.</p>
+            <input type="submit">        
+        </form>
+</body>
+</html>
+<script>
+    document.querySelector("#signup").addEventListener("submit", myFunction)
+    var arr = []
+    function myFunction(){
+        event.preventDefault();
+        var loginObj={
+            name: document.querySelector("#name").value,
+            email:document.querySelector("#email").value,
+            password: document.querySelector("#password").value,
+        };
+        arr.push(loginObj)
+        console.log(loginObj)
+
+    }
+</script>

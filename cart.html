@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <style>
+      /* * {
+        
+        outline: none;
+        
+      } */
+
+      /* navbar  */
+      li {
+        list-style: none;
+      }
+      .header {
+        padding: 5px 15px;
+        tab-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        width: 97%;
+        border-radius: 20px;
+        margin: auto;
+        color: aliceblue;
+        background-color: #1c2939;
+      }
+      .header a {
+        color: white;
+        text-decoration: none;
+      }
+      .navmenu {
+        display: flex;
+        width: 30%;
+        align-items: center;
+        justify-content: space-between;
+      }
+      /* navbar  */
+
+      #itmContainer {
+        width: 90%;
+        margin: 30px auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+      .cartItems {
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      }
+      .cartItems input {
+        border: none;
+        border-radius: 7px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        padding: 10px;
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar Starts -->
+
+    <div class="header">
+      <div class="logo">
+        <p>Reebok</p>
+      </div>
+      <div class="navmenu">
+        <li><a href="mens.html">Men</a></li>
+        <li><a href="womens.html">Women</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html">Signup</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </div>
+    </div>
+    <!-- Navbar Ends -->
+    <div id="itmContainer"></div>
+  </body>
+</html>
+
+<script>
+  const cartData = JSON.parse(localStorage.getItem("cartData")) || [];
+
+  cartData.forEach((el) => {
+    const cartItems = document.createElement("div");
+    cartItems.classList.add("cartItems");
+    const itmImg = document.createElement("img");
+    itmImg.src = el.image_url;
+    const itmName = document.createElement("p");
+    itmName.innerHTML = el.name;
+    const itmPrice = document.createElement("p");
+    itmPrice.innerHTML = "Rs " + el.price;
+    // itmPrice.insertBefore(document.createTextNode("₹"), itmPrice.firstChild);
+    const itmQty = document.createElement("input");
+    itmQty.type = "number";
+    itmQty.setAttribute("min", "1");
+    itmQty.setAttribute("value", "1");
+
+    let price = el.price;
+
+    itmQty.addEventListener("change", (e) => {
+      price = el.price * e.target.value;
+      totalPrice.innerHTML = price;
+    });
+
+    // Promo codes
+    const promoCode = document.createElement("input");
+    promoCode.type = "text";
+    promoCode.placeholder = "Promo Code";
+    promoCode.addEventListener("keyup", (e) => {
+      if (e.target.value === "masai30") {
+        totalPrice.innerHTML = price - price * 0.3;
+      } else {
+        totalPrice.innerHTML = price;
+      }
+    });
+    // promo codes ends
+    const totalPrice = document.createElement("p");
+    totalPrice.innerHTML = "Rs " + price;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.innerHTML = "Remove from cart";
+    removeBtn.addEventListener("click", () => {
+      cartData.splice(cartData.indexOf(el), 1);
+      localStorage.setItem("cartData", JSON.stringify(cartData));
+      location.reload();
+    });
+
+    cartItems.append(
+      itmImg,
+      itmName,
+      itmPrice,
+      promoCode,
+      itmQty,
+      totalPrice,
+      removeBtn
+    );
+    itmContainer.append(cartItems);
+  });
+</script>
